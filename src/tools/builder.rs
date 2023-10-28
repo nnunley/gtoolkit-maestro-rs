@@ -63,10 +63,10 @@ impl BuildOptions {
             return ImageSeed::Image(image_file.clone());
         }
 
-        return ImageSeed::Url(
+        ImageSeed::Url(
             url_parse(DEFAULT_PHARO_IMAGE)
                 .unwrap_or_else(|_| panic!("Failed to parse url: {}", DEFAULT_PHARO_IMAGE)),
-        );
+        )
     }
 
     pub fn explicit_app_version(&self) -> Option<AppVersion> {
@@ -121,7 +121,7 @@ impl BuildOptions {
                     InstallerError::CanonicalizeError(key.clone(), error)
                 })?))
             } else {
-                return InstallerError::PublicKeyDoesNotExist(key.clone()).into();
+                InstallerError::PublicKeyDoesNotExist(key.clone()).into()
             }
         } else {
             Ok(None)
@@ -135,7 +135,7 @@ impl BuildOptions {
                     InstallerError::CanonicalizeError(key.clone(), error)
                 })?))
             } else {
-                return InstallerError::PrivateKeyDoesNotExist(key.clone()).into();
+                InstallerError::PrivateKeyDoesNotExist(key.clone()).into()
             }
         } else {
             Ok(None)
@@ -295,12 +295,11 @@ impl Builder {
                     "v{}",
                     Application::latest_gtoolkit_image_version()
                         .await?
-                        .to_string()
                 )
             }
             BuildVersion::BleedingEdge => "main".to_string(),
             BuildVersion::Version(version) => {
-                format!("v{}", version.to_string())
+                format!("v{}", version)
             }
         };
 
@@ -326,7 +325,7 @@ impl Builder {
 
                 let releaser_version_file_content = releaser_version_file_response.text().await?;
                 let releaser_version = Version::parse(releaser_version_file_content)?;
-                format!("v{}", releaser_version.to_string())
+                format!("v{}", releaser_version)
             }
         };
 

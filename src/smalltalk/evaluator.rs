@@ -120,7 +120,7 @@ impl<'smalltalk, 'options> SmalltalkEvaluator<'smalltalk, 'options> {
 
     pub fn command(&self) -> Result<Command> {
         let relative_executable = self.workspace().join(self.executable());
-        let executable = to_absolute::canonicalize(&relative_executable)?;
+        let executable = to_absolute::canonicalize(relative_executable)?;
 
         let mut command = Command::new(executable);
         command

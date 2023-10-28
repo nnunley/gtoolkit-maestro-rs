@@ -113,9 +113,9 @@ impl SmalltalkFlags {
 
     pub fn interactive_or_headless_flag(&self, is_interactive: bool) -> Option<&str> {
         if is_interactive {
-            self.interactive.as_ref().map(|flag| flag.as_str())
+            self.interactive.as_deref()
         } else {
-            self.headless.as_ref().map(|flag| flag.as_str())
+            self.headless.as_deref()
         }
     }
 }

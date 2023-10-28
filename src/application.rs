@@ -57,7 +57,7 @@ impl Application {
         })?;
 
         let mut application: Application = serde_yaml::from_str(file_content.as_str())
-            .map_err(|error| Into::<InstallerError>::into(error))?;
+            .map_err(Into::<InstallerError>::into)?;
 
         application.workspace = workspace.as_ref().to_path_buf();
         Ok(application)
@@ -148,13 +148,11 @@ impl Application {
 
                 let file_name = image_file
                     .file_stem()
-                    .and_then(|name| name.to_str())
-                    .and_then(|name| Some(name.to_string()));
+                    .and_then(|name| name.to_str()).map(|name| name.to_string());
 
                 let file_extension = image_file
                     .extension()
-                    .and_then(|name| name.to_str())
-                    .and_then(|name| Some(name.to_string()));
+                    .and_then(|name| name.to_str()).map(|name| name.to_string());
 
                 self.image_name = file_name
                     .ok_or_else(|| InstallerError::FailedToReadFileName(image_file.clone()))?;

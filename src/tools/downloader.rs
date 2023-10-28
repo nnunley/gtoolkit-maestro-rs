@@ -29,7 +29,7 @@ impl Downloader {
         let file_name = format!(
             "GlamorousToolkitApp{}-v{}.{}",
             suffix,
-            application.app_version().to_string(),
+            application.app_version(),
             extension
         );
 
@@ -70,7 +70,7 @@ impl Downloader {
         println!(
             "{}Downloading GlamorousToolkit App (v{}, {})...",
             DOWNLOADING,
-            application.app_version().to_string(),
+            application.app_version(),
             target.as_str()
         );
 
@@ -81,7 +81,7 @@ impl Downloader {
         println!(
             "{}Extracting GlamorousToolkit App (v{})...",
             EXTRACTING,
-            application.app_version().to_string()
+            application.app_version()
         );
 
         Self::files_to_unzip(application, target).unzip().await?;

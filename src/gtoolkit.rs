@@ -27,7 +27,7 @@ impl<'application> GToolkit for Smalltalk<'application> {
 
     fn get_app_version(&self) -> Result<Version> {
         let version_string = SmalltalkCommand::new("--short-version")
-            .execute_with_result(&self.evaluator().without_image())?;
+            .execute_with_result(self.evaluator().without_image())?;
         Version::parse(version_string).map_err(|error| error.into())
     }
 

@@ -135,7 +135,7 @@ impl Release {
             .arg(format!("--strategy={}", releaser_options.bump.to_str()))
             .arg(format!(
                 "--expected={}",
-                application.image_version().to_string()
+                application.image_version()
             ))
             .arg(if application.is_verbose() {
                 "--verbose"
@@ -148,17 +148,15 @@ impl Release {
     }
 
     fn create_apk(&self, application: &Application, target: PlatformOS) -> Result<PathBuf> {
-        use ndk_build::apk::{ApkConfig, StripConfig};
+        
         use ndk_build::manifest::{
-            Activity as AndroidActivity, AndroidManifest, Application as AndroidApplication,
-            IntentFilter as AndroidIntentFilter, MetaData as AndroidMetaData,
-            Permission as AndroidPermission,
+            AndroidManifest,
         };
-        use ndk_build::ndk::Ndk;
+        
 
         use ndk_build::target::Target as AndroidTarget;
 
-        let android_target = match target {
+        let _android_target = match target {
             PlatformOS::AndroidAarch64 => AndroidTarget::Arm64V8a,
             _ => {
                 panic!("Unsupported android target: {:?}", target)
